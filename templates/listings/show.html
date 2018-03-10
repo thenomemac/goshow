@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>Listing#Show</h1>
+</div>
+
+<ul class="list-unstyled list-inline">
+  <li><a href="<%= listingsPath() %>" class="btn btn-info">Back to all Listings</a></li>
+  <li><a href="<%= editListingPath({ listing_id: listing.ID })%>" class="btn btn-warning">Edit</a></li>
+  <li><a href="<%= listingPath({ listing_id: listing.ID })%>" data-method="DELETE" data-confirm="Are you sure?" class="btn btn-danger">Destroy</a>
+</ul>
+
+<p>
+  <strong>Name</strong>: <%= listing.Name %>
+</p>
+<p>
+  <strong>Owner</strong>: <%= listing.Owner %>
+</p>
+<p>
+  <strong>Description</strong>: <%= listing.Description %>
+</p>
+<p>
+  <strong>Location</strong>: <%= listing.Location %>
+</p>
+<p>
+  <strong>Startdate</strong>: <%= listing.Startdate %>
+</p>
+<p>
+  <strong>Enddate</strong>: <%= listing.Enddate %>
+</p>

@@ -1,0 +1,9 @@
+create_table("listings", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("name", "string", {})
+	t.Column("owner", "string", {})
+	t.Column("description", "string", {})
+	t.Column("location", "string", {})
+	t.Column("startdate", "timestamp", {})
+	t.Column("enddate", "timestamp", {})
+})
