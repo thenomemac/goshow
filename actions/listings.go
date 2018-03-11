@@ -5,7 +5,6 @@ import (
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
-	"github.com/kr/pretty"
 	"github.com/pkg/errors"
 	"github.com/thenomemac/goshow/models"
 )
@@ -121,8 +120,6 @@ func (v ListingsResource) Create(c buffalo.Context) error {
 	fmt.Println("Address:", address)
 
 	verrs, err = tx.ValidateAndCreate(address)
-	pretty.Println(verrs)
-	pretty.Println(err)
 	if err != nil {
 		return errors.WithStack(err)
 	}
