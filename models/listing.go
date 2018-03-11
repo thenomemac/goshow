@@ -20,6 +20,7 @@ type Listing struct {
 	Location    string    `json:"location" db:"location"`
 	Startdate   time.Time `json:"startdate" db:"startdate"`
 	Enddate     time.Time `json:"enddate" db:"enddate"`
+	Address     Address   `has_one:"address" fk_id:"listing_id"`
 }
 
 // String is not required by pop and may be deleted

@@ -13,6 +13,7 @@
     <th>Location</th>
     <th>Startdate</th>
     <th>Enddate</th>
+    <th>Address</th>
     <th>&nbsp;</th>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
         <td><%= listing.Location %></td>
         <td><%= listing.Startdate %></td>
         <td><%= listing.Enddate %></td>
+        <td><%= listing.Address.City %>, <%= listing.Address.State %></td>
         <td>
           <div class="pull-right">
             <a href="<%= listingPath({ listing_id: listing.ID }) %>" class="btn btn-info">View</a>

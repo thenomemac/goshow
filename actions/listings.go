@@ -1,8 +1,11 @@
 package actions
 
 import (
+	"fmt"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop"
+	"github.com/kr/pretty"
 	"github.com/pkg/errors"
 	"github.com/thenomemac/goshow/models"
 )
@@ -37,7 +40,7 @@ func (v ListingsResource) List(c buffalo.Context) error {
 
 	// Paginate results. Params "page" and "per_page" control pagination.
 	// Default values are "page=1" and "per_page=20".
-	q := tx.PaginateFromParams(c.Params())
+	q := tx.PaginateFromParams(c.Params()).Eager()
 
 	// Retrieve all Listings from the DB
 	if err := q.All(listings); err != nil {
@@ -63,9 +66,11 @@ func (v ListingsResource) Show(c buffalo.Context) error {
 	listing := &models.Listing{}
 
 	// To find the Listing the parameter listing_id is used.
-	if err := tx.Find(listing, c.Param("listing_id")); err != nil {
+	if err := tx.Eager().Find(listing, c.Param("listing_id")); err != nil {
 		return c.Error(404, err)
 	}
+
+	fmt.Println("Listing:", listing)
 
 	return c.Render(200, r.Auto(c, listing))
 }
@@ -73,6 +78,7 @@ func (v ListingsResource) Show(c buffalo.Context) error {
 // New renders the form for creating a new Listing.
 // This function is mapped to the path GET /listings/new
 func (v ListingsResource) New(c buffalo.Context) error {
+	c.Set("fa", &models.Address{})
 	return c.Render(200, r.Auto(c, &models.Listing{}))
 }
 
@@ -95,6 +101,28 @@ func (v ListingsResource) Create(c buffalo.Context) error {
 
 	// Validate the data from the html form
 	verrs, err := tx.ValidateAndCreate(listing)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	if verrs.HasAny() {
+		// Make the errors available inside the html template
+		c.Set("errors", verrs)
+
+		// Render again the new.html template that the user can
+		// correct the input.
+		return c.Render(422, r.Auto(c, listing))
+	}
+
+	fmt.Println("Listing:", listing)
+	// key the address to the listing
+	address := &listing.Address
+	address.ListingID = listing.ID
+	fmt.Println("Address:", address)
+
+	verrs, err = tx.ValidateAndCreate(address)
+	pretty.Println(verrs)
+	pretty.Println(err)
 	if err != nil {
 		return errors.WithStack(err)
 	}
