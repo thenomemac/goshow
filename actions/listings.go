@@ -117,7 +117,6 @@ func (v ListingsResource) Create(c buffalo.Context) error {
 	// key the address to the listing
 	address := &listing.Address
 	address.ListingID = listing.ID
-	fmt.Println("Address:", address)
 
 	verrs, err = tx.ValidateAndCreate(address)
 	if err != nil {
