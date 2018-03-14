@@ -115,10 +115,8 @@ func (v ListingsResource) Create(c buffalo.Context) error {
 
 	fmt.Println("Listing:", listing)
 	// key the address to the listing
-	address := &listing.Address
-	address.ListingID = listing.ID
-
-	verrs, err = tx.ValidateAndCreate(address)
+	listing.Address.ListingID = listing.ID
+	verrs, err = tx.ValidateAndCreate(&listing.Address)
 	if err != nil {
 		return errors.WithStack(err)
 	}
@@ -151,7 +149,7 @@ func (v ListingsResource) Edit(c buffalo.Context) error {
 	// Allocate an empty Listing
 	listing := &models.Listing{}
 
-	if err := tx.Find(listing, c.Param("listing_id")); err != nil {
+	if err := tx.Eager().Find(listing, c.Param("listing_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -170,7 +168,7 @@ func (v ListingsResource) Update(c buffalo.Context) error {
 	// Allocate an empty Listing
 	listing := &models.Listing{}
 
-	if err := tx.Find(listing, c.Param("listing_id")); err != nil {
+	if err := tx.Eager().Find(listing, c.Param("listing_id")); err != nil {
 		return c.Error(404, err)
 	}
 
@@ -180,6 +178,21 @@ func (v ListingsResource) Update(c buffalo.Context) error {
 	}
 
 	verrs, err := tx.ValidateAndUpdate(listing)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	if verrs.HasAny() {
+		// Make the errors available inside the html template
+		c.Set("errors", verrs)
+
+		// Render again the edit.html template that the user can
+		// correct the input.
+		return c.Render(422, r.Auto(c, listing))
+	}
+
+	listing.Address.ListingID = listing.ID
+	verrs, err = tx.ValidateAndUpdate(&listing.Address)
 	if err != nil {
 		return errors.WithStack(err)
 	}

@@ -17,7 +17,6 @@ type Listing struct {
 	Name        string    `json:"name" db:"name"`
 	Owner       string    `json:"owner" db:"owner"`
 	Description string    `json:"description" db:"description"`
-	Location    string    `json:"location" db:"location"`
 	Startdate   time.Time `json:"startdate" db:"startdate"`
 	Enddate     time.Time `json:"enddate" db:"enddate"`
 	Address     Address   `has_one:"address" fk_id:"listing_id"`
@@ -45,7 +44,6 @@ func (l *Listing) Validate(tx *pop.Connection) (*validate.Errors, error) {
 		&validators.StringIsPresent{Field: l.Name, Name: "Name"},
 		&validators.StringIsPresent{Field: l.Owner, Name: "Owner"},
 		&validators.StringIsPresent{Field: l.Description, Name: "Description"},
-		&validators.StringIsPresent{Field: l.Location, Name: "Location"},
 		&validators.TimeIsPresent{Field: l.Startdate, Name: "Startdate"},
 		&validators.TimeIsPresent{Field: l.Enddate, Name: "Enddate"},
 	), nil

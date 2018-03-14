@@ -9,27 +9,24 @@
 </ul>
 
 <p>
-  <strong>Name</strong>: <%= listing.Name %>
+  <strong>Event Name</strong>: <%= listing.Name %>
 </p>
 <p>
-  <strong>Owner</strong>: <%= listing.Owner %>
+  <strong>Organizer</strong>: <%= listing.Owner %>
 </p>
 <p>
   <strong>Description</strong>: <%= listing.Description %>
 </p>
 <p>
-  <strong>Location</strong>: <%= listing.Location %>
+  <strong>Start Date</strong>: <%= listing.Startdate %>
 </p>
 <p>
-  <strong>Startdate</strong>: <%= listing.Startdate %>
-</p>
-<p>
-  <strong>Enddate</strong>: <%= listing.Enddate %>
+  <strong>End Date</strong>: <%= listing.Enddate %>
 </p>
 <p>
   <strong>Address</strong>:
   <br>
-  <%= listing.Address.Address %>
+  <%= listing.Address.Street %>
   <br>
   <%= listing.Address.City %>, <%= listing.Address.State %> <%= listing.Address.Zipcode %>
 </p>

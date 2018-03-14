@@ -1,10 +1,9 @@
-<%= f.InputTag("Name") %>
-<%= f.InputTag("Owner") %>
+<%= f.InputTag("Name", {label:"Event Name"}) %>
+<%= f.InputTag("Owner", {label:"Organizer"}) %>
 <%= f.InputTag("Description") %>
-<%= f.InputTag("Location") %>
-<%= f.InputTag("Startdate") %>
-<%= f.InputTag("Enddate") %>
-<%= f.InputTag("Address.Address") %>
+<%= f.InputTag("Startdate", {label:"Start Date", value:"2018-07-01"}) %>
+<%= f.InputTag("Enddate", {label:"End Date", value:"2018-07-01"}) %>
+<%= f.InputTag("Address.Street") %>
 <%= f.InputTag("Address.City") %>
 <%= f.InputTag("Address.State") %>
 <%= f.InputTag("Address.Zipcode") %>

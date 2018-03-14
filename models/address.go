@@ -14,7 +14,7 @@ type Address struct {
 	ID        uuid.UUID `json:"id" db:"id"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
-	Address   string    `json:"address" db:"address"`
+	Street    string    `json:"street" db:"street"`
 	City      string    `json:"city" db:"city"`
 	State     string    `json:"state" db:"state"`
 	Zipcode   string    `json:"zipcode" db:"zipcode"`
@@ -40,7 +40,7 @@ func (a Addresses) String() string {
 // This method is not required and may be deleted.
 func (a *Address) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.Validate(
-		&validators.StringIsPresent{Field: a.Address, Name: "Address"},
+		&validators.StringIsPresent{Field: a.Street, Name: "Street"},
 		&validators.StringIsPresent{Field: a.City, Name: "City"},
 		&validators.StringIsPresent{Field: a.State, Name: "State"},
 		&validators.StringIsPresent{Field: a.Zipcode, Name: "Zipcode"},
